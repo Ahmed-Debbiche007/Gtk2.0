@@ -1,0 +1,14 @@
+77777 banana fruits 1719.000000 EPUISE 
+55555 pomme fruits 49228.000000 EPUISE 
+998989 poulet viandesblanches 0.000000 EPUISE 
+8976 jambon produitlaitier 1928.000000 ENSTOCK 
+4444 jhin viandesrouges 35.000000 ENSTOCK 
+787465 jjmkl legumes 1.000000 EPUISE 
+99999 ilqzio viandesrouges 1.000000 EPUISE 
+5454 hamma viandesrouges 1.000000 EPUISE 
+8888 j4kk viandesrouges 1.000000 ENSTOCK 
+9999 aaaa legumes 1.000000 ENSTOCK 
+121345 yayayay viandesrouges 1726.000000 EPUISE 
+4558 gagga viandesrouges 1.000000 ENSTOCK 
+876532 hammadi legumes 0.000000 EPUISE 
+111188 zkfejsqok legumes 4.000000 ENSTOCK 
