@@ -20,7 +20,7 @@ cd src
 
 ./user // cette commande lancera l'application desktop
 
-#Login
+# Login
 
 ![Alt text](images/login.png?raw=true "login")
 
@@ -28,27 +28,27 @@ cd src
 
 ![Alt text](images/admin.png?raw=true "admin")
 
-#Dashboard
+# Dashboard
 
 ![Alt text](images/dash.png?raw=true "dash")
 
-#Espace Reclamation
+# Espace Reclamation
 
 ![Alt text](images/reclam.png?raw=true "reclam")
 
-#Espace Agent de Restaurant
+# Espace Agent de Restaurant
 
 ![Alt text](images/resto.png?raw=true "resto")
 
-Espace Agent de Foyer
+# Espace Agent de Foyer
 
 ![Alt text](images/foyer.png?raw=true "foyer")
 
-Espace AgentdEvènement
+# Espace AgentdEvènement
 
 ![Alt text](images/event.png?raw=true "event")
 
-Espace Technicien
+# Espace Technicien
 
 ![Alt text](images/tech.png?raw=true "tech")
 
