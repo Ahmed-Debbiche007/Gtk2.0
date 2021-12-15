@@ -44,7 +44,7 @@ cd src
 
 ![Alt text](images/foyer.png?raw=true "foyer")
 
-# Espace AgentdEvènement
+# Espace Agent d'Evènement
 
 ![Alt text](images/event.png?raw=true "event")
 
