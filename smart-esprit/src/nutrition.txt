@@ -1,0 +1,7 @@
+ 15 dejeuner PlatPrincipal 12 15 12 18 45 5 12 2021
+ 3 dejeuner dessert p 20 90 30 50 1 1 2021
+ 150 dejeuner PlatPrincipal 6 5 8 3 2 1 1 2000
+ 12 dejeuner dessert sdjj l l l l 1 1 2000
+ 7 dejeuner entree o 8 5 9 7 1 1 2000
+ 113235 petitdejeuner 1 12 m m m m 1 1 2000
+ 12345 petitdejeuner 1 1 12 2000 55 petitdejeuner 3 1 2000
