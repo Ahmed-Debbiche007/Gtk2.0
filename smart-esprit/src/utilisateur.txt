@@ -1,8 +1,0 @@
-a a a a Admin a a
-nom pre user pass Admin tel cin
-b b b b Etudiant 55 55
-c c c c Agent_Restaurant 77 77
-d d d d Agent_Foyer 22 22
-e e e e Agent_Evenement 66 33
-f f f f Technicien 00 12
-g g g g Etudiant 11 

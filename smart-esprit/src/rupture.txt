@@ -1,8 +1,0 @@
-44 aml viandesrouges 3.000000 EPUISE 
-8976 banana fruits 2332.000000 EPUISE 
-2222 kiwi fruits 264.000000 EPUISE 
-87644 jambon legumes 3443.000000 EPUISE 
-2020 poisson viandesblanches 0.000000 EPUISE 
-6321 orange fruits 0.000000 EPUISE 
-4569 dele3 fruits 0.000000 EPUISE 
-5446 tomato legumes 0.000000 EPUISE 
