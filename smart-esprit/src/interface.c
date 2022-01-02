@@ -1225,7 +1225,7 @@ create_ajouterEtudiant (void)
   gtk_fixed_put (GTK_FIXED (fixed5), label331, 128, 336);
   gtk_widget_set_size_request (label331, 57, 17);
 
-  radiobuttonMale = gtk_radio_button_new_with_mnemonic (NULL, _("male \n"));
+  radiobuttonMale = gtk_radio_button_new_with_mnemonic (NULL, _("male"));
   gtk_widget_show (radiobuttonMale);
   gtk_fixed_put (GTK_FIXED (fixed5), radiobuttonMale, 208, 336);
   gtk_widget_set_size_request (radiobuttonMale, 64, 24);
@@ -6344,6 +6344,7 @@ create_dash (void)
   GtkWidget *label670;
   GtkWidget *image188;
   GtkWidget *label671;
+GtkWidget *label682;
 
   dash = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (dash), _("Dashboard"));
@@ -6549,7 +6550,7 @@ create_dash (void)
 
   button93 = gtk_button_new ();
   gtk_widget_show (button93);
-  gtk_fixed_put (GTK_FIXED (fixed36), button93, 232, 440);
+  gtk_fixed_put (GTK_FIXED (fixed36), button93, 64, 448);
   gtk_widget_set_size_request (button93, 216, 37);
 
   alignment106 = gtk_alignment_new (0.5, 0.5, 0, 0);
@@ -6635,6 +6636,10 @@ strcat(cmpt, t.Prenom);
   gtk_fixed_put (GTK_FIXED (fixed36), label671, 400, 40);
   gtk_widget_set_size_request (label671, 176, 24);
 
+  label682 = gtk_label_new ("");
+  gtk_widget_show (label682);
+  gtk_fixed_put (GTK_FIXED (fixed36), label682, 288, 448);
+  gtk_widget_set_size_request (label682, 328, 40);
   g_signal_connect ((gpointer) treevieway, "row_activated",
                     G_CALLBACK (on_treevieway_row_activated),
                     NULL);
@@ -6732,6 +6737,7 @@ strcat(cmpt, t.Prenom);
   GLADE_HOOKUP_OBJECT (dash, label670, "label670");
   GLADE_HOOKUP_OBJECT (dash, image188, "image188");
   GLADE_HOOKUP_OBJECT (dash, label671, "label671");
+GLADE_HOOKUP_OBJECT (dash, label682, "label682");
 
   return dash;
 }

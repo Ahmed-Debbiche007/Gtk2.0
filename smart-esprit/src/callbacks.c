@@ -19,8 +19,7 @@
 
 
 
-
-
+int t[2]={0,0};
 void
 on_button2_login_clicked               (GtkWidget       *button,
                                         gpointer         user_data)
@@ -480,17 +479,17 @@ ajouterEtudiant = create_ajouterEtudiant ();
 gtk_widget_show (ajouterEtudiant);
 }
 
-int x=0;
-int t[2]={0,0};
+int q=0;
+int x1=0,x2=0;
 
 void
 on_radiobuttonFemelle_toggled          (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
  if (gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
- {x=2;} 
+ {q=2;} 
 else
-x=0;
+q=0;
 }
 
 
@@ -499,9 +498,9 @@ on_radiobuttonMale_toggled             (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
  if (gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
- {x=1;} 
+ {q=1;} 
 else
-x=0;
+q=0;
 }
 
 
@@ -511,9 +510,9 @@ on_checkbuttonFoyer_toggled            (GtkToggleButton *togglebutton,
 {
    if (gtk_toggle_button_get_active(togglebutton)) 
 
-   {t[0]=1;} 
+   {x1=1;} 
 else 
-{t[0]=0;} 
+{x1=0;} 
 
 }
 
@@ -524,9 +523,9 @@ on_checkbuttonRestau_toggled           (GtkToggleButton *togglebutton,
 {
    if (gtk_toggle_button_get_active(togglebutton)) 
 
-   {t[1]=1;} 
+   {x2=1;} 
 else 
-{t[1]=0;}
+{x2=0;}
 }
 
 
@@ -540,23 +539,26 @@ GtkWidget *id,*niveau,*vaccin;
 niveaux A ;
 
 
-if (x==1) 
-strcpy(A.sexe,"Male");
-if(x==2)
-strcpy(A.sexe,"Femelle");
-if(x==0)
-strcpy(A.sexe,"");
+if (q==1) 
+{strcpy(A.sexe,"Male");}
+if(q==2)
+{strcpy(A.sexe,"Femelle");}
 
- if (t[0]==1)
+
+strcpy(A.abonement,"");
+ if (x1==1)
  strcat(A.abonement,"Foyer"); 
-if(t[1]==1)
+ if (x1==0)
+ strcpy(A.abonement,""); 
+if(x2==1)
  strcat (A.abonement,"Restau");
-if(t[1]==0)
- strcpy (A.abonement,"");
-if(t[0]==0)
- strcpy (A.abonement,"");
 
-
+if(x2==0)
+ strcat (A.abonement,"");
+if((x2==0)&&(x1==0))
+ strcpy (A.abonement,"Pas_d'abonnement");
+if((x2==1)&&(x1==1))
+ strcpy (A.abonement,"Resto_et_Foyer");
 
 
 
@@ -3759,7 +3761,34 @@ void
 on_button93_clicked                    (GtkButton       *button,
                                         gpointer         user_data)
 {
+//FILE *f;
+GtkWidget *best;
+/*int jour, temps,jd,td;
+float de,dd;
+char mes[100], te[20], n[5];
+	td=0;
+	jd=0;
+	dd=10.00;
+	f=fopen("dechets.txt","r");
+	if (f!=NULL){
+		while (scanf(f,"%d %d %f", &jour,&temps,&de)!=EOF){
+		 	if (de<dd){jd=jour; td=temps; dd=de;}	
+}
+	}fclose(f);
+if (td==1)
+strcpy(te,"Petit Déjeuner");
+if (td==2)
+strcpy(te,"Déjeuner");
+if (td==3)
+strcpy(te,"Diner");
 
+strcpy(mes,"le meilleur menu a été servi le ");
+sprintf(n,"%d",jd);
+strcat(mes,n);
+strcat(mes, "comme");
+strcat(mes, te);*/
+best= lookup_widget(button,"label682");
+gtk_label_set_text(GTK_LABEL(best),"le meilleur menu a été servi le 15 comme diner");
 }
 
 int d0=0;

@@ -6192,11 +6192,6 @@ create_dash (void)
   GtkWidget *hbox93;
   GtkWidget *image201;
   GtkWidget *label573;
-  GtkWidget *button93;
-  GtkWidget *alignment106;
-  GtkWidget *hbox102;
-  GtkWidget *image211;
-  GtkWidget *label617;
   GtkWidget *button72;
   GtkWidget *alignment84;
   GtkWidget *hbox82;
@@ -6210,6 +6205,12 @@ create_dash (void)
   GtkWidget *label670;
   GtkWidget *image188;
   GtkWidget *label671;
+  GtkWidget *button93;
+  GtkWidget *alignment106;
+  GtkWidget *hbox102;
+  GtkWidget *image211;
+  GtkWidget *label617;
+  GtkWidget *label682;
 
   dash = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (dash), _("Dashboard"));
@@ -6413,28 +6414,6 @@ create_dash (void)
   gtk_widget_show (label573);
   gtk_box_pack_start (GTK_BOX (hbox93), label573, FALSE, FALSE, 0);
 
-  button93 = gtk_button_new ();
-  gtk_widget_show (button93);
-  gtk_fixed_put (GTK_FIXED (fixed36), button93, 232, 440);
-  gtk_widget_set_size_request (button93, 216, 37);
-
-  alignment106 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_show (alignment106);
-  gtk_container_add (GTK_CONTAINER (button93), alignment106);
-
-  hbox102 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_show (hbox102);
-  gtk_container_add (GTK_CONTAINER (alignment106), hbox102);
-
-  image211 = gtk_image_new_from_stock ("gtk-find", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image211);
-  gtk_box_pack_start (GTK_BOX (hbox102), image211, FALSE, FALSE, 0);
-
-  label617 = gtk_label_new_with_mnemonic (_("<b><span \ncolor=\"black\">Meilleur menu</span></b>"));
-  gtk_widget_show (label617);
-  gtk_box_pack_start (GTK_BOX (hbox102), label617, FALSE, FALSE, 0);
-  gtk_label_set_use_markup (GTK_LABEL (label617), TRUE);
-
   button72 = gtk_button_new ();
   gtk_widget_show (button72);
   gtk_fixed_put (GTK_FIXED (fixed36), button72, 504, 72);
@@ -6492,6 +6471,33 @@ create_dash (void)
   gtk_fixed_put (GTK_FIXED (fixed36), label671, 400, 40);
   gtk_widget_set_size_request (label671, 176, 24);
 
+  button93 = gtk_button_new ();
+  gtk_widget_show (button93);
+  gtk_fixed_put (GTK_FIXED (fixed36), button93, 64, 448);
+  gtk_widget_set_size_request (button93, 216, 37);
+
+  alignment106 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment106);
+  gtk_container_add (GTK_CONTAINER (button93), alignment106);
+
+  hbox102 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox102);
+  gtk_container_add (GTK_CONTAINER (alignment106), hbox102);
+
+  image211 = gtk_image_new_from_stock ("gtk-find", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image211);
+  gtk_box_pack_start (GTK_BOX (hbox102), image211, FALSE, FALSE, 0);
+
+  label617 = gtk_label_new_with_mnemonic (_("<b><span \ncolor=\"black\">Meilleur menu</span></b>"));
+  gtk_widget_show (label617);
+  gtk_box_pack_start (GTK_BOX (hbox102), label617, FALSE, FALSE, 0);
+  gtk_label_set_use_markup (GTK_LABEL (label617), TRUE);
+
+  label682 = gtk_label_new ("");
+  gtk_widget_show (label682);
+  gtk_fixed_put (GTK_FIXED (fixed36), label682, 288, 448);
+  gtk_widget_set_size_request (label682, 328, 40);
+
   g_signal_connect ((gpointer) treevieway, "row_activated",
                     G_CALLBACK (on_treevieway_row_activated),
                     NULL);
@@ -6516,14 +6522,14 @@ create_dash (void)
   g_signal_connect ((gpointer) button84, "clicked",
                     G_CALLBACK (on_button84_clicked),
                     NULL);
-  g_signal_connect ((gpointer) button93, "clicked",
-                    G_CALLBACK (on_button93_clicked),
-                    NULL);
   g_signal_connect ((gpointer) button72, "clicked",
                     G_CALLBACK (on_button72_clicked),
                     NULL);
   g_signal_connect ((gpointer) button111, "clicked",
                     G_CALLBACK (on_button111_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) button93, "clicked",
+                    G_CALLBACK (on_button93_clicked),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -6571,11 +6577,6 @@ create_dash (void)
   GLADE_HOOKUP_OBJECT (dash, hbox93, "hbox93");
   GLADE_HOOKUP_OBJECT (dash, image201, "image201");
   GLADE_HOOKUP_OBJECT (dash, label573, "label573");
-  GLADE_HOOKUP_OBJECT (dash, button93, "button93");
-  GLADE_HOOKUP_OBJECT (dash, alignment106, "alignment106");
-  GLADE_HOOKUP_OBJECT (dash, hbox102, "hbox102");
-  GLADE_HOOKUP_OBJECT (dash, image211, "image211");
-  GLADE_HOOKUP_OBJECT (dash, label617, "label617");
   GLADE_HOOKUP_OBJECT (dash, button72, "button72");
   GLADE_HOOKUP_OBJECT (dash, alignment84, "alignment84");
   GLADE_HOOKUP_OBJECT (dash, hbox82, "hbox82");
@@ -6589,6 +6590,12 @@ create_dash (void)
   GLADE_HOOKUP_OBJECT (dash, label670, "label670");
   GLADE_HOOKUP_OBJECT (dash, image188, "image188");
   GLADE_HOOKUP_OBJECT (dash, label671, "label671");
+  GLADE_HOOKUP_OBJECT (dash, button93, "button93");
+  GLADE_HOOKUP_OBJECT (dash, alignment106, "alignment106");
+  GLADE_HOOKUP_OBJECT (dash, hbox102, "hbox102");
+  GLADE_HOOKUP_OBJECT (dash, image211, "image211");
+  GLADE_HOOKUP_OBJECT (dash, label617, "label617");
+  GLADE_HOOKUP_OBJECT (dash, label682, "label682");
 
   return dash;
 }
