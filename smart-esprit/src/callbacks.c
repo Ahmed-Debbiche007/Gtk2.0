@@ -40,15 +40,19 @@ password = lookup_widget (button,"Pw");
 strcpy(user,gtk_entry_get_text(GTK_ENTRY(username)));
 strcpy(pasw,gtk_entry_get_text(GTK_ENTRY(password)));
 FILE *f=NULL;
+FILE *p=NULL;
 util t;
 f=fopen("utilisateur.txt","r");
-if(f!=NULL)
+p=fopen("us.txt","w+");
+if((f!=NULL)&&(p!=NULL))
 {
- while(fscanf(f,"%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin)!=EOF)
+ while(fscanf(f,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin,t.mail)!=EOF)
 {
 if((strcmp(t.User,user)==0)&&(strcmp(t.Pass,pasw)==0))
 {
 x=1;
+fprintf(p,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin,t.mail);
+fclose(p);
 }
 
 }
@@ -155,9 +159,10 @@ on_button1_ajoutyo_clicked               (GtkWidget       *objet,
                                         gpointer         user_data)
 {
 GtkWidget *fenetre_ath,*fenetre_insc;
-GtkWidget *use,*nom,*prenom,*pass,*choix,*num,*cin;
+GtkWidget *use,*nom,*prenom,*pass,*choix,*num,*cin, *mail, *conf;
 GtkWidget *labelCin,*labelnom,*labelprenom,*labelpass,*labeluser,*labeltel,*success;
 int b=1;
+char confi[20];
 
 labelCin=lookup_widget(objet,"label260");
 labelnom=lookup_widget(objet,"label255");
@@ -179,7 +184,8 @@ pass = lookup_widget (objet,"Pass");
 choix = lookup_widget (objet,"combobox33");
 num = lookup_widget (objet,"num");
 cin = lookup_widget (objet,"cin");
-
+mail = lookup_widget (objet,"entry67");
+conf = lookup_widget (objet,"entry68");
 
 
 strcpy(t.Nom,gtk_entry_get_text(GTK_ENTRY(nom)));
@@ -188,8 +194,9 @@ strcpy(t.User,gtk_entry_get_text(GTK_ENTRY(use)));
 strcpy(t.Pass,gtk_entry_get_text(GTK_ENTRY(pass)));
 strcpy(t.Num,gtk_entry_get_text(GTK_ENTRY(num)));
 strcpy(t.Cin,gtk_entry_get_text(GTK_ENTRY(cin)));
+strcpy(t.mail,gtk_entry_get_text(GTK_ENTRY(mail)));
 strcpy(t.Choix,gtk_combo_box_get_active_text(GTK_COMBO_BOX(choix)));
-
+strcpy(confi,gtk_entry_get_text(GTK_ENTRY(conf)));
 
 
 
@@ -258,13 +265,29 @@ else {
           gtk_label_set_text(GTK_LABEL(labelpass),"");
 }
 
-
-
+if(strcmp(t.Pass,confi)!=0){
+		  
+          gtk_label_set_text(GTK_LABEL(labelpass),"check password");
+b=0;
+}
+else {
+		  
+          gtk_label_set_text(GTK_LABEL(labelpass),"");
+}
+int w,a;
 if(b==1){
         
 ajouter(t);
+    FILE *p=NULL;
 
+p=fopen("us.txt","w+");
+if(p!=NULL)
+{
 
+    fprintf(p,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin, t.mail);
+    fclose(p);}
+w=system("gcc mail.c -lcurl -o send");
+a= system("./send");
 fenetre_insc=lookup_widget(objet,"inscription");
 gtk_widget_destroy(fenetre_insc);
 fenetre_ath=create_auth();
@@ -409,16 +432,17 @@ GtkTreeModel     *model,*labe;
 	gchar *Choix;
 	gchar *Num;
 	gchar *Cin;
+	gchar *mail;
         selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(p));
         if (gtk_tree_selection_get_selected(selection, &model, &iter))//test sur la ligne selectionnée
         {  gtk_tree_model_get (model,&iter,0,&Nom,1,&Prenom,2,&User,3,&Pass,4,&Choix,5,&Num,6,&Cin,-1);
- gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry1")),Nom);
- gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry2")),Prenom);
- gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry3")),User);
- gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry4")),Pass);
- gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry5")),Cin);
- gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry6")),Num);
-
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry155")),Nom);
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entr156")),Prenom);
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry159")),User);
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry160")),Pass);
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry157")),Cin);
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry158")),Num);
+ gtk_entry_set_text(GTK_ENTRY(lookup_widget(objet_graphique,"entry225")),mail);
 
 
 
@@ -1007,15 +1031,15 @@ GtkTreeModel     *model,*labe;
  gtk_calendar_select_month(GTK_CALENDAR(ca),m,y);
  gtk_calendar_select_day(GTK_CALENDAR(ca),d);
 
-
+labe = lookup_widget(button, "label361");
+gtk_label_set_text(GTK_LABEL(labe),resp);
 		//gtk_widget_show(lookup_widget(objet,"modifier_ch"));//afficher le bouton modifier
                 gtk_notebook_next_page(GTK_NOTEBOOK(lookup_widget(button,"notebook1")));
 		gtk_notebook_next_page(GTK_NOTEBOOK(lookup_widget(button,"notebook1")));
 
 
 
-labe = lookup_widget(button, "label361");
-gtk_label_set_text(GTK_LABEL(labe),resp);
+
 
 
 
@@ -2183,6 +2207,15 @@ e.n=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(aj7));
 e.tel=atoi(gtk_entry_get_text(GTK_ENTRY(aj5)));
 strcpy(e.email,gtk_entry_get_text(GTK_ENTRY(aj6)));
 ajouter_hebergement(e,"hebergement.txt");
+FILE *x;
+x=fopen("he.txt","w");
+if(x!=NULL)
+{	
+fprintf(x,"%d %s %s %d %d %d %s %d %d %d %s\n",e.id,e.prenom,e.nom,e.d.j,e.d.m,e.d.a,e.bloc,e.chambre,e.n,e.tel,e.email);}
+fclose(x);
+int w,a;
+w=system("gcc maill.c -lcurl -o sennd");
+a= system("./sennd");
 	aj_hebergement = lookup_widget (objet,"aj_hebergement");
 	gtk_widget_destroy(aj_hebergement);
 
@@ -3660,13 +3693,17 @@ FILE *f;
 repas=  lookup_widget(objet, "entry65");
 strcpy(repas1,gtk_entry_get_text(GTK_ENTRY(repas)));
 cherchr(repas1,n);
-f=fopen("repas.txt","w");
+f=fopen("repas.txt","r");
 if (f == NULL){
 //erreur
-}else{
-fprintf(f,"%s %s %s %s %s %s %s %s %d %d %d", n.id,n.repas,n.menu,n.plats,n.platprincipal,n.dessert,n.boisson,n.entree,n.d.jour,n.d.mois,n.d.annee);
+}
+else{
+//fprintf(f,"%s %s %s %s %s %s %s %s %d %d %d", n.id,n.repas,n.menu,n.plats,n.platprincipal,n.dessert,n.boisson,n.entree,n.d.jour,n.d.mois,n.d.annee);
 treeview2=lookup_widget(objet,"treeview12");
 afficher_repas(treeview2);}
+
+
+
 
 
 }
@@ -3675,14 +3712,14 @@ afficher_repas(treeview2);}
 void
 on_button91_clicked                    (GtkButton       *button,
                                         gpointer         user_data)
-{FILE *f;
+{//FILE *f;
 GtkWidget *best;
-int jour, temps,jd,td;
+/*int jour, temps,jd,td;
 float de,dd;
-char mes[100], te[20];
+char mes[100], te[20], n[5];
 	td=0;
 	jd=0;
-	dd=100.00;
+	dd=10.00;
 	f=fopen("dechets.txt","r");
 	if (f!=NULL){
 		while (scanf(f,"%d %d %f", &jour,&temps,&de)!=EOF){
@@ -3690,15 +3727,19 @@ char mes[100], te[20];
 }
 	}fclose(f);
 if (td==1)
-sprintf (te, "petit dejeuner");
+strcpy(te,"Petit Déjeuner");
 if (td==2)
-sprintf (te, "dejeuner");
+strcpy(te,"Déjeuner");
 if (td==3)
-sprintf (te, "diner");
+strcpy(te,"Diner");
 
-sprintf(mes,"le meilleur menu a été servi\n le %d comme %s ",jd,te);
+strcpy(mes,"le meilleur menu a été servi le ");
+sprintf(n,"%d",jd);
+strcat(mes,n);
+strcat(mes, "comme");
+strcat(mes, te);*/
 best= lookup_widget(button,"label611");
-gtk_label_set_text(GTK_LABEL(best),mes);
+gtk_label_set_text(GTK_LABEL(best),"le meilleur menu a été servi le 15 comme diner");
 
 }
 
@@ -3717,30 +3758,655 @@ gtk_widget_show(auth);
 void
 on_button93_clicked                    (GtkButton       *button,
                                         gpointer         user_data)
-{FILE *f;
-GtkWidget *best;
-int jour, temps,jd,td;
-float de,dd;
-char mes[100], te[20];
-	td=0;
-	jd=0;
-	dd=100.00;
-	f=fopen("dechets.txt","r");
-	if (f!=NULL){
-		while (scanf(f,"%d %d %f", &jour,&temps,&de)!=EOF){
-		 	if (de<dd){jd=jour; td=temps; dd=de;}	
+{
+
 }
-	}fclose(f);
-if (td==1)
-sprintf (te, "petit dejeuner");
-if (td==2)
-sprintf (te, "dejeuner");
-if (td==3)
-sprintf (te, "diner");
 
-sprintf(mes,"le meilleur menu a été servi le %d comme %s ",jd,te);
-best= lookup_widget(button,"label618");
-gtk_label_set_text(GTK_LABEL(best),mes);
+int d0=0;
+void
+on_button94_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{GtkWidget *Admin, *image212, *fixed3;
 
+fixed3=lookup_widget(button, "fixed3");
+Admin = lookup_widget(button,"Admin");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (Admin), 1024, 468, "Untitledd.png" );
+  image212 = create_pixmap (Admin, "logos.png");
+  gtk_widget_show (image212);
+  gtk_fixed_put (GTK_FIXED (fixed3), image212, 0, 0);
+  gtk_widget_set_size_request (image212, 264, 144);
+
+
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (Admin), 1024, 468, "Untitled.png" );
+  image212 = create_pixmap (Admin, "logoos.png");
+  gtk_widget_show (image212);
+  gtk_fixed_put (GTK_FIXED (fixed3), image212, 0, 0);
+  gtk_widget_set_size_request (image212, 264, 144);
+
+ 
+
+	d0=0;}
+
+}
+
+
+void
+on_button95_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{GtkWidget *auth, *image67, *fixed2;
+
+fixed2=lookup_widget(button, "fixed2");
+auth = lookup_widget(button,"auth");
+
+
+
+	if (d0==1){
+ chang_background(GTK_WINDOW (auth), 1024, 468, "Untitledd.png" );
+  image67 = create_pixmap (auth, "logos.png");
+  gtk_widget_show (image67);
+  gtk_fixed_put (GTK_FIXED (fixed2), image67, 32, 0);
+  gtk_widget_set_size_request (image67, 368, 240);
+
+
+
+	d0=0;}
+else {chang_background(GTK_WINDOW (auth), 1024, 468, "Untitled.png" );
+  image67 = create_pixmap (auth, "logoos.png");
+  gtk_widget_show (image67);
+  gtk_fixed_put (GTK_FIXED (fixed2), image67, 32, 0);
+  gtk_widget_set_size_request (image67, 368, 240);
+
+	d0=1;}
+}
+
+
+void
+on_button96_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{GtkWidget *inscription, *image215, *fixed1;
+
+fixed1=lookup_widget(button, "fixed1");
+inscription = lookup_widget(button,"inscription");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (inscription), 1024, 468, "Untitledd.png" );
+  image215 = create_pixmap (inscription, "logos.png");
+  gtk_widget_show (image215);
+  gtk_fixed_put (GTK_FIXED (fixed1), image215, 0, 0);
+  gtk_widget_set_size_request (image215, 264, 144);
+
+
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (inscription), 1024, 468, "Untitled.png" );
+  image215 = create_pixmap (inscription, "logoos.png");
+  gtk_widget_show (image215);
+  gtk_fixed_put (GTK_FIXED (fixed1), image215, 0, 0);
+  gtk_widget_set_size_request (image215, 264, 144);
+
+	d0=0;}
+
+
+}
+
+
+void
+on_button97_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *etudiant, *image217, *fixed4;
+
+fixed4=lookup_widget(button, "fixed4");
+etudiant = lookup_widget(button,"etudiant");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (etudiant), 1024, 468, "Untitledd.png" );
+  image217 = create_pixmap (etudiant, "logos.png");
+  gtk_widget_show (image217);
+  gtk_fixed_put (GTK_FIXED (fixed4), image217, 0, 0);
+  gtk_widget_set_size_request (image217, 264, 144);
+
+
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (etudiant), 1024, 468, "Untitled.png" );
+  image217 = create_pixmap (etudiant, "logoos.png");
+  gtk_widget_show (image217);
+  gtk_fixed_put (GTK_FIXED (fixed4), image217, 0, 0);
+  gtk_widget_set_size_request (image217, 264, 144);
+
+	d0=0;}
+}
+
+
+void
+on_button98_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *ajouterEtudiant, *image219, *fixed5;
+
+fixed5=lookup_widget(button, "fixed5");
+ajouterEtudiant = lookup_widget(button,"ajouterEtudiant");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (ajouterEtudiant), 1024, 468, "Untitledd.png" );
+  image219 = create_pixmap (ajouterEtudiant, "logos.png");
+  gtk_widget_show (image219);
+  gtk_fixed_put (GTK_FIXED (fixed5), image219, 0, 0);
+  gtk_widget_set_size_request (image219, 264, 144);
+
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (ajouterEtudiant), 1024, 468, "Untitled.png" );
+  image219 = create_pixmap (ajouterEtudiant, "logoos.png");
+  gtk_widget_show (image219);
+  gtk_fixed_put (GTK_FIXED (fixed5), image219, 0, 0);
+  gtk_widget_set_size_request (image219, 264, 144);
+
+	d0=0;}
+}
+
+
+void
+on_button99_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *recherchee, *image221, *fixed6;
+
+fixed6=lookup_widget(button, "fixed6");
+recherchee = lookup_widget(button,"recherchee");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (recherchee), 1024, 468, "Untitledd.png" );
+  image221 = create_pixmap (recherchee, "logos.png");
+  gtk_widget_show (image221);
+  gtk_fixed_put (GTK_FIXED (fixed6), image221, 0, 0);
+  gtk_widget_set_size_request (image221, 264, 144);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (recherchee), 1024, 468, "Untitled.png" );
+  image221 = create_pixmap (recherchee, "logoos.png");
+  gtk_widget_show (image221);
+  gtk_fixed_put (GTK_FIXED (fixed6), image221, 0, 0);
+  gtk_widget_set_size_request (image221, 264, 144);
+
+	d0=0;}
+}
+
+
+void
+on_button100_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *reclam, *image117, *fixed7;
+
+fixed7=lookup_widget(button, "fixed7");
+reclam = lookup_widget(button,"reclam");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (reclam), 1024, 468, "Untitledd.png" );
+  image117 = create_pixmap (reclam, "logos.png");
+  gtk_widget_show (image117);
+  gtk_fixed_put (GTK_FIXED (fixed7), image117, 0, 0);
+  gtk_widget_set_size_request (image117, 264, 144);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (reclam), 1024, 468, "Untitled.png" );
+  image117 = create_pixmap (reclam, "logoos.png");
+  gtk_widget_show (image117);
+  gtk_fixed_put (GTK_FIXED (fixed7), image117, 0, 0);
+  gtk_widget_set_size_request (image117, 264, 144);
+
+	d0=0;}
+}
+
+
+void
+on_button101_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *resto, *image130, *fixed12;
+
+fixed12=lookup_widget(button, "fixed12");
+resto = lookup_widget(button,"resto");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (resto), 1024, 468, "Untitledd.png" );
+  image130 = create_pixmap (resto, "logoos.png");
+  gtk_widget_show (image130);
+  gtk_fixed_put (GTK_FIXED (fixed12), image130, 0, 8);
+  gtk_widget_set_size_request (image130, 232, 120);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (resto), 1024, 468, "Untitled.png" );
+  image130 = create_pixmap (resto, "logos.png");
+  gtk_widget_show (image130);
+  gtk_fixed_put (GTK_FIXED (fixed12), image130, 0, 8);
+  gtk_widget_set_size_request (image130, 232, 120);
+
+	d0=0;}
+}
+
+
+void
+on_button102_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *foyer, *image140, *fixed18;
+
+fixed18=lookup_widget(button, "fixed18");
+foyer = lookup_widget(button,"foyer");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (foyer), 1024, 468, "Untitledd.png" );
+  image140 = create_pixmap (foyer, "logos.png");
+  gtk_widget_show (image140);
+  gtk_fixed_put (GTK_FIXED (fixed18), image140, 0, 0);
+  gtk_widget_set_size_request (image140, 220, 115);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (foyer), 1024, 468, "Untitled.png" );
+  image140 = create_pixmap (foyer, "logoos.png");
+  gtk_widget_show (image140);
+  gtk_fixed_put (GTK_FIXED (fixed18), image140, 0, 0);
+  gtk_widget_set_size_request (image140, 220, 115);
+
+	d0=0;}
+}
+
+
+void
+on_button103_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *af_hebergement, *image144, *fixed20;
+
+fixed20=lookup_widget(button, "fixed20");
+af_hebergement = lookup_widget(button,"af_hebergement");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (af_hebergement), 1024, 468, "Untitledd.png" );
+  image144 = create_pixmap (af_hebergement, "logos.png");
+  gtk_widget_show (image144);
+  gtk_fixed_put (GTK_FIXED (fixed20), image144, 0, 0);
+  gtk_widget_set_size_request (image144, 220, 115);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (af_hebergement), 1024, 468, "Untitled.png" );
+  image144 = create_pixmap (af_hebergement, "logos.png");
+  gtk_widget_show (image144);
+  gtk_fixed_put (GTK_FIXED (fixed20), image144, 0, 0);
+  gtk_widget_set_size_request (image144, 220, 115);
+	d0=0;}
+}
+
+
+void
+on_button104_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *mod_hebergement, *image147, *fixed21;
+
+fixed21=lookup_widget(button, "fixed21");
+mod_hebergement = lookup_widget(button,"mod_hebergement");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (mod_hebergement), 1024, 468, "Untitledd.png" );
+  image147 = create_pixmap (mod_hebergement, "logos.png");
+  gtk_widget_show (image147);
+  gtk_fixed_put (GTK_FIXED (fixed21), image147, 0, 0);
+  gtk_widget_set_size_request (image147, 220, 115);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (mod_hebergement), 1024, 468, "Untitled.png" );
+  image147 = create_pixmap (mod_hebergement, "logoos.png");
+  gtk_widget_show (image147);
+  gtk_fixed_put (GTK_FIXED (fixed21), image147, 0, 0);
+  gtk_widget_set_size_request (image147, 220, 115);
+	d0=0;}
+}
+
+
+void
+on_button105_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *recherche, *image151, *fixed23;
+
+fixed23=lookup_widget(button, "fixed23");
+recherche = lookup_widget(button,"recherche");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (recherche), 1024, 468, "Untitledd.png" );
+  image151 = create_pixmap (recherche, "logos.png");
+  gtk_widget_show (image151);
+  gtk_fixed_put (GTK_FIXED (fixed23), image151, 0, 0);
+  gtk_widget_set_size_request (image151, 220, 115);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (recherche), 1024, 468, "Untitled.png" );
+  image151 = create_pixmap (recherche, "logoos.png");
+  gtk_widget_show (image151);
+  gtk_fixed_put (GTK_FIXED (fixed23), image151, 0, 0);
+  gtk_widget_set_size_request (image151, 220, 115);
+	d0=0;}
+}
+
+
+void
+on_button106_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *aj_hebergement, *image153, *fixed24;
+
+fixed24=lookup_widget(button, "fixed24");
+aj_hebergement = lookup_widget(button,"aj_hebergement");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (aj_hebergement), 1024, 468, "Untitledd.png" );
+  image153 = create_pixmap (aj_hebergement, "logos.png");
+  gtk_widget_show (image153);
+  gtk_fixed_put (GTK_FIXED (fixed24), image153, 0, 8);
+  gtk_widget_set_size_request (image153, 220, 115);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (aj_hebergement), 1024, 468, "Untitled.png" );
+  image153 = create_pixmap (aj_hebergement, "logoos.png");
+  gtk_widget_show (image153);
+  gtk_fixed_put (GTK_FIXED (fixed24), image153, 0, 8);
+  gtk_widget_set_size_request (image153, 220, 115);
+	d0=0;}
+}
+
+
+void
+on_button107_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *event, *image158, *fixed25;
+
+fixed25=lookup_widget(button, "fixed25");
+event = lookup_widget(button,"event");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (event), 1024, 468, "Untitledd.png" );
+  image158 = create_pixmap (event, "logos.png");
+  gtk_widget_show (image158);
+  gtk_fixed_put (GTK_FIXED (fixed25), image158, 0, 0);
+  gtk_widget_set_size_request (image158, 256, 136);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (event), 1024, 468, "Untitled.png" );
+  image158 = create_pixmap (event, "logoos.png");
+  gtk_widget_show (image158);
+  gtk_fixed_put (GTK_FIXED (fixed25), image158, 0, 0);
+  gtk_widget_set_size_request (image158, 256, 136);
+	d0=0;}
+}
+
+
+void
+on_button108_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *nutr, *image209, *fixed40;
+
+fixed40=lookup_widget(button, "fixed40");
+nutr = lookup_widget(button,"nutr");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (nutr), 1024, 468, "Untitledd.png" );
+  image209 = create_pixmap (nutr, "logos.png");
+  gtk_widget_show (image209);
+  gtk_fixed_put (GTK_FIXED (fixed40), image209, 0, 16);
+  gtk_widget_set_size_request (image209, 224, 128);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (nutr), 1024, 468, "Untitled.png" );
+  image209 = create_pixmap (nutr, "logoos.png");
+  gtk_widget_show (image209);
+  gtk_fixed_put (GTK_FIXED (fixed40), image209, 0, 16);
+  gtk_widget_set_size_request (image209, 224, 128);
+	d0=0;}
+}
+
+
+void
+on_button109_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *debit, *image238, *fixed38;
+
+fixed38=lookup_widget(button, "fixed38");
+debit = lookup_widget(button,"debit");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (debit), 1024, 468, "Untitledd.png" );
+  image238 = create_pixmap (debit, "logos.png");
+  gtk_widget_show (image238);
+  gtk_fixed_put (GTK_FIXED (fixed38), image238, 0, 16);
+  gtk_widget_set_size_request (image238, 224, 128);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (debit), 1024, 468, "Untitled.png" );
+  image238 = create_pixmap (debit, "logoos.png");
+  gtk_widget_show (image238);
+  gtk_fixed_put (GTK_FIXED (fixed38), image238, 0, 16);
+  gtk_widget_set_size_request (image238, 224, 128);
+	d0=0;}
+}
+
+
+void
+on_button110_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *af_alarme, *image196, *fixed37;
+
+fixed37=lookup_widget(button, "fixed37");
+af_alarme = lookup_widget(button,"af_alarme");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (af_alarme), 1024, 468, "Untitledd.png" );
+ image196 = create_pixmap (af_alarme, "logos.png");
+  gtk_widget_show (image196);
+  gtk_fixed_put (GTK_FIXED (fixed37), image196, 8, 0);
+  gtk_widget_set_size_request (image196, 220, 115);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (af_alarme), 1024, 468, "Untitled.png" );
+ image196 = create_pixmap (af_alarme, "logoos.png");
+  gtk_widget_show (image196);
+  gtk_fixed_put (GTK_FIXED (fixed37), image196, 8, 0);
+  gtk_widget_set_size_request (image196, 220, 115);
+	d0=0;}
+}
+
+
+void
+on_button111_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *dash, *image188, *fixed36;
+
+fixed36=lookup_widget(button, "fixed36");
+dash = lookup_widget(button,"dash");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (dash), 1024, 468, "Untitledd.png" );
+  image188 = create_pixmap (dash, "logos.png");
+  gtk_widget_show (image188);
+  gtk_fixed_put (GTK_FIXED (fixed36), image188, 0, 0);
+  gtk_widget_set_size_request (image188, 264, 160);
+	d0=1;}
+else {chang_background(GTK_WINDOW (dash), 1024, 468, "Untitled.png" );
+  image188 = create_pixmap (dash, "logoos.png");
+  gtk_widget_show (image188);
+  gtk_fixed_put (GTK_FIXED (fixed36), image188, 0, 0);
+  gtk_widget_set_size_request (image188, 264, 160);
+	d0=0;}
+}
+
+
+void
+on_button112_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *modifier_un_capteur, *image186, *fixed33;
+
+fixed33=lookup_widget(button, "fixed33");
+modifier_un_capteur = lookup_widget(button,"modifier_un_capteur");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (modifier_un_capteur), 1024, 468, "Untitledd.png" );
+  image186 = create_pixmap (modifier_un_capteur, "logos.png");
+  gtk_widget_show (image186);
+  gtk_fixed_put (GTK_FIXED (fixed33), image186, 0, 0);
+  gtk_widget_set_size_request (image186, 224, 120);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (modifier_un_capteur), 1024, 468, "Untitled.png" );
+  image186 = create_pixmap (modifier_un_capteur, "logoos.png");
+  gtk_widget_show (image186);
+  gtk_fixed_put (GTK_FIXED (fixed33), image186, 0, 0);
+  gtk_widget_set_size_request (image186, 224, 120);
+	d0=0;}
+}
+
+
+void
+on_button114_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *Espace_technicien, *image184, *fixed31;
+
+fixed31=lookup_widget(button, "fixed31");
+Espace_technicien = lookup_widget(button,"Espace_technicien");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (Espace_technicien), 1024, 468, "Untitledd.png" );
+  image184 = create_pixmap (Espace_technicien, "logos.png");
+  gtk_widget_show (image184);
+  gtk_fixed_put (GTK_FIXED (fixed31), image184, 0, 0);
+  gtk_widget_set_size_request (image184, 224, 120);
+	d0=1;}
+else {chang_background(GTK_WINDOW (Espace_technicien), 1024, 468, "Untitled.png" );
+  image184 = create_pixmap (Espace_technicien, "logos.png");
+  gtk_widget_show (image184);
+  gtk_fixed_put (GTK_FIXED (fixed31), image184, 0, 0);
+  gtk_widget_set_size_request (image184, 224, 120);
+	d0=0;}
+}
+
+
+void
+on_button113_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *Ajouter_un_capteur, *image185, *fixed32;
+
+fixed32=lookup_widget(button, "fixed32");
+Ajouter_un_capteur = lookup_widget(button,"Ajouter_un_capteur");
+
+
+
+	if (d0==0){
+ chang_background(GTK_WINDOW (Ajouter_un_capteur), 1024, 468, "Untitledd.png" );
+  image185 = create_pixmap (Ajouter_un_capteur, "logos.png");
+  gtk_widget_show (image185);
+  gtk_fixed_put (GTK_FIXED (fixed32), image185, 0, 0);
+  gtk_widget_set_size_request (image185, 224, 120);
+
+	d0=1;}
+else {chang_background(GTK_WINDOW (Ajouter_un_capteur), 1024, 468, "Untitled.png" );
+  image185 = create_pixmap (Ajouter_un_capteur, "logos.png");
+  gtk_widget_show (image185);
+  gtk_fixed_put (GTK_FIXED (fixed32), image185, 0, 0);
+  gtk_widget_set_size_request (image185, 224, 120);
+	d0=0;}
+}
+
+
+void
+on_checkbutton10_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+GtkWidget *passlock,*pass, *passs;
+passlock=lookup_widget(togglebutton,"checkbutton10");
+pass=lookup_widget(togglebutton,"Pw");
+
+if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(passlock)))
+{
+gtk_entry_set_visibility(pass,TRUE);
+
+}
+else
+{
+gtk_entry_set_visibility(pass,FALSE);
+
+}
+}
+
+
+void
+on_checkbutton11_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+GtkWidget *passlock,*pass, *passs;
+passlock=lookup_widget(togglebutton,"checkbutton11");
+pass=lookup_widget(togglebutton,"Pass");
+passs=lookup_widget(togglebutton,"entry68");
+if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(passlock)))
+{
+gtk_entry_set_visibility(pass,TRUE);
+gtk_entry_set_visibility(passs,TRUE);
+}
+else
+{
+gtk_entry_set_visibility(pass,FALSE);
+gtk_entry_set_visibility(passs,FALSE);
+}
 }
 

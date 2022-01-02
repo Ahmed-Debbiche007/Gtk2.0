@@ -284,9 +284,9 @@ fclose(t);
 
 void commander()    
 {  
-    char *URL;   
-    URL = "xdg-open http://google.com";
-    system(URL);   
+ int w,a;
+w=system("gcc mailll.c -lcurl -o sennnd");
+a= system("./sennnd");
     
 }
 

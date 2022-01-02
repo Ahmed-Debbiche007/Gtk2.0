@@ -252,7 +252,7 @@ f=fopen("nutrition.txt","r");
 f1=fopen("ancien.txt","w");
 if (f!=NULL)
 {
-while (fscanf(f," %s %s %s %s %s %s %s %s %d %d %d",n.id,n.repas,n.menu,n.plats,n.platprincipal,n.dessert,n.boisson,n.entree,&n.d.jour,&n.d.mois,&n.d.annee)==11)
+while (fscanf(f," %s %s %s %s %s %s %s %s %d %d %d",n.id,n.repas,n.menu,n.plats,n.platprincipal,n.dessert,n.boisson,n.entree,&n.d.jour,&n.d.mois,&n.d.annee)!=EOF)
 
 if (strcmp(id,n.id)==0)
 {
@@ -291,10 +291,11 @@ int verf(char id[])
 
 
 //chercher
-void cherchr(char repas[],nut n){
+void cherchr(char repas[],nut c){
 FILE*f=NULL;
 FILE* f1=NULL;
 char plats[20];
+nut n;
 remove("repas.txt");
 f=fopen("nutrition.txt","r");
 f1=fopen("repas.txt","a+"); 
@@ -378,9 +379,9 @@ void afficher_repas(GtkWidget *liste )
 	store1=gtk_list_store_new (COLUMNS1,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_INT,G_TYPE_INT,G_TYPE_INT);	
 
 	f=fopen("repas.txt","r");
-	if(f==NULL)
+	if(f==NULL){}
 	
-		printf("erreur ");
+		//printf("erreur ");
 	
 	else
 	{

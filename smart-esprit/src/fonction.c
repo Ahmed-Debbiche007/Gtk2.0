@@ -21,7 +21,7 @@ util t;
 f=fopen("utilisateur.txt","r");
 if(f!=NULL)
 {
- while(fscanf(f,"%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin)!=EOF)
+ while(fscanf(f,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin, t.mail)!=EOF)
 {
 if((strcmp(t.User,log)==0)&&(strcmp(t.Pass,Pw)==0))
 {
@@ -56,7 +56,7 @@ f=fopen("utilisateur.txt","a");
 if(f!=NULL)
 {
 
-    fprintf(f,"%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin);
+    fprintf(f,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin, t.mail);
     fclose(f);
     
 
@@ -77,13 +77,15 @@ char Pass[20];
 char Choix[20];
 char Num[20];
 char Cin[20];
+char mail[50];
 
 
         /* Creation du modele */
-        adstore = gtk_list_store_new(7,
+        adstore = gtk_list_store_new(8,
 				     G_TYPE_STRING,
 				     G_TYPE_STRING,
 				     G_TYPE_STRING,			
+                                     G_TYPE_STRING,
                                      G_TYPE_STRING,
                                      G_TYPE_STRING,
                                      G_TYPE_STRING,
@@ -91,7 +93,7 @@ char Cin[20];
                                      		);
         /* Insertion des elements */
         F=fopen(l,"r");
-while(fscanf(F,"%s %s %s %s %s %s %s \n",Nom,Prenom,User,Pass,Choix,Num,Cin)!= EOF)
+while(fscanf(F,"%s %s %s %s %s %s %s %s \n",Nom,Prenom,User,Pass,Choix,Num,Cin,mail)!= EOF)
         {GtkTreeIter pIter;
 
          /* Creation de la nouvelle ligne */
@@ -105,6 +107,7 @@ while(fscanf(F,"%s %s %s %s %s %s %s \n",Nom,Prenom,User,Pass,Choix,Num,Cin)!= E
                             4,Choix,
                             5,Num,
                             6,Cin,
+                            7,mail,
                             -1);}
         fclose(F);
 
@@ -180,6 +183,14 @@ cellad = gtk_cell_renderer_text_new();
                                                             NULL);
 	/* Ajouter la 7emme colonne à la vue */
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeviewAffiListUser), adcolumn);
+	/* Creation de la 7eme colonne */
+        cellad = gtk_cell_renderer_text_new();
+        adcolumn = gtk_tree_view_column_new_with_attributes("Mail",
+                                                            cellad,
+                                                            "text", 7,
+                                                            NULL);
+	/* Ajouter la 7emme colonne à la vue */
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeviewAffiListUser), adcolumn);
 
 	
 
@@ -202,9 +213,9 @@ FW = fopen ("tr.txt", "w");
 
   if ((F!=NULL)&&(FW!=NULL))
  {
-  while (fscanf (F,"%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin) != EOF)
+  while (fscanf (F,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin, t.mail) != EOF)
     if (strcmp (t.Cin,Cin) != 0)
-      fprintf (FW,"%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin);
+      fprintf (FW,"%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin, t.mail);
   fclose (F);
   fclose (FW);
 remove("utilisateur.txt");
@@ -218,7 +229,7 @@ FILE *f;
 f=fopen("utilisateur.txt","r");
 if(f!=NULL){
 
-	while(fscanf(f,"%s %s %s %s %s %s %s \n",q.Nom,q.Prenom,q.User,q.Pass,q.Choix,q.Num,q.Cin)!=EOF)
+	while(fscanf(f,"%s %s %s %s %s %s %s %s\n",q.Nom,q.Prenom,q.User,q.Pass,q.Choix,q.Num,q.Cin, q.mail)!=EOF)
 	
 	if(strcmp(q.Cin,id)==0){
 
@@ -229,6 +240,7 @@ if(f!=NULL){
 	strcpy(o.Choix,q.Choix);
 	strcpy(o.Num,q.Num);
 	strcpy(o.Cin,q.Cin);
+	strcpy(o.mail,q.mail);
 
 	}
 	return o;
@@ -256,15 +268,15 @@ FW = fopen ("tr.txt", "w");
  {
 
 
-  while (fscanf (F, "%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin) != EOF)
+  while (fscanf (F, "%s %s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin,t.mail) != EOF)
     if (strcmp (t.Cin,Cin) == 0)
      {
-fprintf (FW, "%s %s %s %s %s %s %s\n",o.Nom,o.Prenom,o.User,o.Pass,o.Choix,o.Num,Cin);
+fprintf (FW, "%s %s %s %s %s %s %s %s\n",o.Nom,o.Prenom,o.User,o.Pass,o.Choix,o.Num,Cin,o.mail);
 
      }
      else
      {
-       fprintf (FW, "%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin);
+       fprintf (FW, "%s %s %s %s %s %s %s\n",t.Nom,t.Prenom,t.User,t.Pass,t.Choix,t.Num,t.Cin, t.mail);
      }
      
 

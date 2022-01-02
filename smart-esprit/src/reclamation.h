@@ -33,4 +33,5 @@ void affi_ad_ch(GtkWidget* treeview1,char*l);
 
 
 
-
+/////////////////////////////////
+void chang_background(GtkWidget *widget, int w, int h, const gchar *path);

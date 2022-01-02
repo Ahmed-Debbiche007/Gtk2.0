@@ -38,7 +38,7 @@ void actu(GtkWidget *liste );
 void supprimr (char id[]);
 void modifir(char id[], nut n1 );
 void afficher_repas(GtkWidget *liste );
-void cherchr(char repas[],nut n);
+void cherchr(repas1,n);
 int controle(char ch[]);
 
 

@@ -7,6 +7,7 @@ char Pass[20];
 char Choix[20];
 char Num[20];
 char Cin[20];
+char mail [50];
 }util;
 
 typedef struct {
