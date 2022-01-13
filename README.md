@@ -8,17 +8,17 @@ La direction d’ESPRIT  vous sollicite afin d’automatiser la gestion de son f
 Après le clonage du repo : (avec la commande git clone)
 
 
-  $cd Smart-Esprit
+  '$cd Smart-Esprit'
 
-  $cd smart-esprit
+  '$cd smart-esprit'
 
-  $./autogen.sh
+  '$./autogen.sh'
 
-  $make; sudo make install
+  '$make; sudo make install'
 
-  $cd src
+  '$cd src'
 
-  $./user // cette commande lancera l'application desktop
+  '$./user // cette commande lancera l'application desktop'
 
 # Login
 
