@@ -7,10 +7,15 @@ La direction d’ESPRIT  vous sollicite afin d’automatiser la gestion de son f
 # Comment utiliser?
 
   $ cd Smart-Esprit
+  
   $ cd smart-esprit
+  
   $ ./autogen.sh
+  
   $ make; sudo make install
+  
   $ cd src
+  
   $ ./user
 
 # Login
