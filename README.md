@@ -8,15 +8,7 @@ La direction d’ESPRIT  vous sollicite afin d’automatiser la gestion de son f
 
   $ git clone https://github.com/Ahmed-Debbiche007/Smart-Esprit.git
 
-  $ cd Smart-Esprit
-  
-  $ cd smart-esprit
-  
-  $ ./autogen.sh
-  
-  $ make; sudo make install
-  
-  $ cd src
+  $ cd Smart-Esprit/smart-esprit/src
   
   $ ./user
 
