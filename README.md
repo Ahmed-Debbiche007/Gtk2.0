@@ -6,11 +6,11 @@ La direction d’ESPRIT  vous sollicite afin d’automatiser la gestion de son f
 
 # Comment utiliser?
 
-  $ git clone https://github.com/Ahmed-Debbiche007/Smart-Esprit.git
+  ### `git clone https://github.com/Ahmed-Debbiche007/Smart-Esprit.git`
 
-  $ cd Smart-Esprit/smart-esprit/src
+  ### `cd Smart-Esprit/smart-esprit/src`
   
-  $ ./user
+  ### `./user`   
 
 # Login
 
